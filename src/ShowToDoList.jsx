@@ -1,22 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
-import { useEffect } from 'react'
-import { showToDolist } from './API/api'
-export default function ShowToDoList() {
 
-    const [lists,setLists] = useState([])
-
-    const getToDolist  = async ()=>{
-           const lists =  await showToDolist();
-           console.log(lists)
-        }
-
-    useEffect(() =>{
-        getToDolist()
-    },[])
+export default function ShowToDoList({todos,dispatch}) {
   return (
     <div>
-      
+        {todos?.map(({title,isDone},i)=> (
+          <li>{title}  <button   style={{backgroundColor:isDone?"green":""}} onClick={()=>dispatch({type:"UPDATE",index:i})}>{isDone?"Complete":"Incomplete"}</button> <button onClick={()=>dispatch({type:"DELETE",index:i})}>Delete</button></li>
+        ))}
     </div>
   )
 }
