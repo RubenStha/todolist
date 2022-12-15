@@ -1,9 +1,11 @@
 import React from 'react'
-import {addToDoList} from './API/api'
+import {addTolist} from './API/api'
+import {useMutation} from 'react-query'
 
 
-export default function AddToDo({task,setTask}) {
-  const {mutate} = addToDoList()
+export default function AddToDo({task,setTask,refetch}) {
+
+  const {mutate} = useMutation(addTolist,{onSuccess:refetch})
   // console.log(data)
   return (
   

@@ -1,47 +1,26 @@
 import React from 'react'
-import {QueryClient,QueryClientProvider} from 'react-query'
-import { useState,useReducer } from 'react'
+import { useState} from 'react'
 import AddToDo from './AddToDo'
-import { getToDoList,addToDoList} from './API/api'
 import ShowToDoList from './ShowToDoList'
-
-
-// const reducer = (state,action) =>{
-  
-//   const {mutate:addList} = addToDoList()
-  // const {mutate:deleteList} = deleteToDoList()
-  // const {mutate:updateList} = updateList()
-
-  // const {type,task,id} =action
-  // console.log(index)
-  // switch(type){
-  //   case "ADD_TASK":  
-  //         return addList(task) ;
-    // case "DELETE":
-    //       return deleteList();
-    // case "UPDATE":
-    //       return updateList();
-//     default:
-//       return state;    
-//   }
-// }
-
-const queryClient = new QueryClient()
+import { useQuery } from 'react-query'
+import { getList } from './API/api'
 
 export default function App() {
-  
+  const {data:todos,refetch} = useQuery("todolist",getList)
 
   const [task,setTask]=useState({
     title:"",
     isDone:false
   })
 
-  // const [todos,dispatch]= useReducer(reducer,[])
+
+
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <AddToDo task={task} setTask={setTask} />
-      <ShowToDoList />
-    </QueryClientProvider>
+    <div>
+      <AddToDo task={task} setTask={setTask} refetch={refetch}/>
+      <ShowToDoList todos={todos} refetch={refetch}/>
+    </div>
+    
   )
 }
