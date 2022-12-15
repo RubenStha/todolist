@@ -1,11 +1,15 @@
 import React from 'react'
-import { useState } from 'react'
+import { getToDoList,updateToDoList,deleteToDoList } from './API/api'
 
-export default function ShowToDoList({todos,dispatch}) {
+export default function ShowToDoList() {
+  const {data:todos} = getToDoList()
+  const {mutate:update} = updateToDoList()
+  const {mutate} = deleteToDoList()
   return (
     <div>
-        {todos?.map(({title,isDone},i)=> (
-          <li>{title}  <button   style={{backgroundColor:isDone?"green":""}} onClick={()=>dispatch({type:"UPDATE",index:i})}>{isDone?"Complete":"Incomplete"}</button> <button onClick={()=>dispatch({type:"DELETE",index:i})}>Delete</button></li>
+      
+        {todos?.data?.map(({title,isDone,id})=> (
+          <li key={id}>{title}  <button   style={{backgroundColor:isDone?"green":""}} onClick={()=>update({id,isDone:!isDone})}>{isDone?"Complete":"Incomplete"}</button> <button onClick={()=>mutate(id)}>Delete</button></li>
         ))}
     </div>
   )

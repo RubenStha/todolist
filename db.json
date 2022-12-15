@@ -1,0 +1,41 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "todolist": [
+    {
+      "title": "sdffdsf",
+      "isDone": false,
+      "id": 1
+    },
+    {
+      "title": "sdffdsf",
+      "isDone": true,
+      "id": 2
+    },
+    {
+      "title": "sdfsfds",
+      "isDone": false,
+      "id": 3
+    },
+    {
+      "title": "dffsdfsd",
+      "isDone": false,
+      "id": 4
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

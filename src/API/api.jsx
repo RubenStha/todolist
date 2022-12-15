@@ -1,32 +1,47 @@
-import axios from 'axios'
+import axios from "axios"
+import {useMutation,useQuery,useQueryClient } from "react-query"
 
 
-let headers = {
-    "Content-Type": "application/json",
-  };
-  
-  const baseURL = "https://jsonplaceholder.typicode.com"
+const baseUrl = "http://localhost:3000"
+const header = "application/josn"
 
-  const api = axios.create({
-    baseURL: baseURL,
-    headers: headers
-  });
-  
-
-export async function addToDolist(list){
-    try {
-       const  {data} = await api.post('/posts',list)
-        console.log(data)
-        return data
-    } catch (error) {
-       console.log(error) 
-    }
+const api = axios.create({
+  baseURL: baseUrl,
+  headers:header
 }
-export async function showToDolist(list){
-    try {
-       const  {data} = await api.get('/posts')
-        return data
-    } catch (error) {
-       console.log(error) 
-    }
+
+)
+
+ function addTolist(list){ 
+    return  api.post('/todolist',list)  
+}
+ function updateList(list){ 
+  console.log(list)
+    return  api.patch(`/todolist/${list.id}`,list)  
+}
+ function deleteList(id){ 
+    console.log("id " + id)
+    return  api.delete(`/todolist/${id}`,id)  
+}
+
+
+function getList(){
+  return api.get('/todolist')
+}
+
+export const addToDoList=  ()=>{
+  const queryClient = useQueryClient()
+  return useMutation(addTolist)
+}
+export const updateToDoList=  ()=>{
+  const queryClient = useQueryClient()
+  return useMutation(updateList)
+}
+export const deleteToDoList=  ()=>{
+  const queryClient = useQueryClient()
+  return useMutation(deleteList)
+}
+
+export const getToDoList = ()=>{
+  return useQuery("todolist",getList)
 }
